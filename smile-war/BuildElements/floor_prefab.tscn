@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://clxpeb344jli4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_adrne"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_brk5m"]
+load_path = "res://.godot/imported/WhiteTiles02_4K_BaseColor.png-9791bc401cbc14614cce28ab09a26cc9.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f0v8l"]
+load_path = "res://.godot/imported/WhiteTiles02_4K_Height.png-2a5f0393d197f5d36a313e255f72b0f5.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dnyem"]
+load_path = "res://.godot/imported/WhiteTiles02_4K_Normal.png-0fe574685ddf5b509e888d6d8c6ae4e8.s3tc.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wpk4g"]
+load_path = "res://.godot/imported/WhiteTiles02_4K_Roughness.png-b1ae4a30d4ce2741b4f917c349a3424e.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mwns4"]
+albedo_color = Color(0.890196, 1, 1, 1)
+albedo_texture = SubResource("CompressedTexture2D_brk5m")
+roughness_texture = SubResource("CompressedTexture2D_wpk4g")
+normal_enabled = true
+normal_texture = SubResource("CompressedTexture2D_dnyem")
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+heightmap_texture = SubResource("CompressedTexture2D_f0v8l")
+uv1_scale = Vector3(12, 6, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dipt8"]
+
+[node name="FloorPrefab" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.547, -1.5, -0.026)
+mesh = SubResource("BoxMesh_adrne")
+surface_material_override/0 = SubResource("StandardMaterial3D_mwns4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_dipt8")

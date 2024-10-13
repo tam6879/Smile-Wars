@@ -1,0 +1,47 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://b5qh3yikr75uf"]
+
+[ext_resource type="Shader" path="res://Environment/Water/water.gdshader" id="1_y238v"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vppnx"]
+noise_type = 0
+frequency = 0.0066
+fractal_type = 2
+fractal_gain = 0.635
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mq1pg"]
+in_3d_space = true
+seamless = true
+normalize = false
+noise = SubResource("FastNoiseLite_vppnx")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_giukc"]
+fractal_lacunarity = 2.45
+fractal_gain = 0.315
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j3clm"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_giukc")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_y238v")
+shader_parameter/water_color = Color(0.0320361, 0.404805, 0.739586, 1)
+shader_parameter/color_ratio = 0.3
+shader_parameter/roughness = 0.25
+shader_parameter/wave_height = 0.05
+shader_parameter/wave_frequency = 5.0
+shader_parameter/wave_speed = 0.66
+shader_parameter/height_scale = 0.2
+shader_parameter/height_frequency = 0.2
+shader_parameter/height_uv_scale = Vector2(128, 128)
+shader_parameter/uv_scale = Vector2(16, 16)
+shader_parameter/highlight_scale = Vector2(0.25, 0.25)
+shader_parameter/highlight_speed = 0.025
+shader_parameter/chroma_r = Vector2(0.005, 0)
+shader_parameter/chroma_g = Vector2(0, -0.005)
+shader_parameter/chroma_b = Vector2(-0.004, 0.005)
+shader_parameter/alpha = 0.75
+shader_parameter/water_noise_normal = SubResource("NoiseTexture2D_j3clm")
+shader_parameter/sun_highlights = SubResource("NoiseTexture2D_mq1pg")
