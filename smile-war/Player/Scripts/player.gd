@@ -53,9 +53,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if camera_angle + t_change > -80 and camera_angle + t_change < 80:
 			camera_angle += t_change
 			cam.rotate_x(deg_to_rad(t_change))
-			$RailRay.rotate_x(deg_to_rad(t_change))
+			$CollisionShape3D/RailAnchor.rotate_x(deg_to_rad(t_change))
 			$smiley.rotate_x(deg_to_rad(t_change))
-	elif event is InputEventMouseButton:
+	if event is InputEventMouseButton:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 var grounded := false
@@ -85,6 +85,7 @@ func _physics_process(delta: float) -> void:
 	elif not grounded:
 		velocity.y += GRAVITY * delta
 	if Input.is_action_pressed("Fire"):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		player_data.try_fire(-cam.global_basis.z)
 	if Input.is_action_just_pressed("Quit"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

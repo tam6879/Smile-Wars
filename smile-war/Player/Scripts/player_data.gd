@@ -3,7 +3,7 @@ extends Node
 @onready var character := $".."
 @onready var model := $"../smiley/Sphere"
 @onready var player_cam := $"../PayerCam"
-@onready var rail_ray: RayCast3D = $"../RailRay"
+@onready var rail_ray: RayCast3D = $"../CollisionShape3D/RailAnchor/RailRay"
 @onready var particles: GPUParticles3D = $"../RailgunParticles"
 
 @export var id : int = 1
@@ -15,7 +15,7 @@ var color = Color(255, 255, 0)
 
 func try_fire(ray_dir):
 	if fire_timer <= 0:
-		shoot(ray_dir, $"../RailRay".global_position)
+		shoot(ray_dir, rail_ray.global_position)
 		fire_timer = 55
 
 @rpc("any_peer", "reliable", "call_local")
@@ -32,7 +32,7 @@ func shoot(ray_dir: Vector3, pos: Vector3):
 		var dist = pos.distance_to(point)
 		mid = lerp(pos, point, 0.5)
 		particles.process_material.emission_box_extents.y = dist / 2
-		particles.amount = roundf(dist) * 12
+		particles.amount = clamp(roundf(dist) * 12, 1, 9999)
 		
 		if col.collision_layer == 2:
 			print("Hit player: ", col.name.to_int())
